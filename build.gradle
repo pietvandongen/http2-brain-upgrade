@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'io.vertx:vertx-core:3.3.3'
+    compile 'io.netty:netty-tcnative-boringssl-static:1.1.33.Fork26'
+    testCompile 'junit:junit:4.12'
+}
