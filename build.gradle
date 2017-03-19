@@ -9,3 +9,8 @@ dependencies {
     compile 'io.netty:netty-tcnative-boringssl-static:1.1.33.Fork26'
     testCompile 'junit:junit:4.12'
 }
+
+task runServer(type:JavaExec) {
+    main = 'com.pietvandongen.http2brainupgrade.Example'
+    classpath = sourceSets.main.runtimeClasspath
+}
