@@ -2,12 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>title</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Hello, world!</h1>
-<img src="test.png"/>
+<header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li>
+                    <a href="/">Hello, world!</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>You are looking at a demonstration of HTTP/2.</h1>
+    </div>
+</header>
+
+<article>
+    <div class="container">
+        <p>Its key differences to HTTP/1.x are:</p>
+
+        <ul>
+            <li>Binary format, instead of text.</li>
+            <li>Full multiplexing, instead of ordering and blocking.</li>
+            <li>Just one connection used for parallelism.</li>
+            <li>Header compression, reducing overhead.</li>
+            <li>Allows servers to <em>push</em> their responses proactively.</li>
+        </ul>
+
+        <button>Awesome</button>
+    </div>
+</article>
+
+<footer>
+    <div class="container">
+        Created by <a href="http://www.pietvandongen.com">Piet van Dongen</a> for <a href="https://www.luminis.eu/">Luminis</a>.
+    </div>
+</footer>
+
 <script src="application.js"></script>
 </body>
 </html>

@@ -1,3 +1,112 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
+    background-color: #0079f3;
+    color: #413b4f;
     font-family: sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+header {
+    line-height: 1;
+    padding: 0 2rem 2rem 2rem;
+}
+
+nav {
+    padding-top: 2rem;
+}
+
+article,
+footer {
+    padding: 2rem;
+}
+
+.container {
+    margin: 0 auto;
+    width: auto;
+}
+
+footer {
+    background: #0079f3;
+    color: #fcfdff;
+}
+
+nav a,
+footer a {
+    color: #dfeeff;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+}
+
+header {
+    background: transparent url("photo.jpg") center right no-repeat;
+    background-size: cover;
+}
+
+header h1 {
+    color: #fff;
+}
+
+article {
+    background: #fff;
+}
+
+article p,
+article ul {
+    margin-bottom: 1.5rem;
+}
+
+article ul {
+    list-style: none;
+}
+
+article ul li:before {
+    content: "—";
+    width: 2.5rem;
+    display: inline-block;
+}
+
+button {
+    background: #0079f3;
+    border: 0;
+    border-radius: 2rem;
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    margin: 0.5rem 0;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
 }

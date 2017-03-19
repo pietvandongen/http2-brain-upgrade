@@ -8,7 +8,7 @@ public class Example {
 
     private static final String HTML_FILENAME = "index.html";
     private static final String STYLESHEET_FILENAME = "style.css";
-    private static final String IMAGE_FILENAME = "test.png";
+    private static final String IMAGE_FILENAME = "photo.jpg";
     private static final String JAVASCRIPT_FILENAME = "application.js";
 
     private static final String BASE_PATH = "/";
@@ -38,24 +38,24 @@ public class Example {
                             response
                                     .push(HttpMethod.GET, STYLESHEET_PATH, asyncResult -> {
                                         if (asyncResult.succeeded()) {
-                                            HttpServerResponse pushedResp = asyncResult.result();
-                                            pushedResp.sendFile(STYLESHEET_FILENAME);
+                                            HttpServerResponse pushedResponse = asyncResult.result();
+                                            pushedResponse.sendFile(STYLESHEET_FILENAME);
                                         } else {
                                             System.err.println(asyncResult.cause().getMessage());
                                         }
                                     })
                                     .push(HttpMethod.GET, IMAGE_PATH, asyncResult -> {
                                         if (asyncResult.succeeded()) {
-                                            HttpServerResponse pushedResp = asyncResult.result();
-                                            pushedResp.sendFile(IMAGE_FILENAME);
+                                            HttpServerResponse pushedResponse = asyncResult.result();
+                                            pushedResponse.sendFile(IMAGE_FILENAME);
                                         } else {
                                             System.err.println(asyncResult.cause().getMessage());
                                         }
                                     })
                                     .push(HttpMethod.GET, JAVASCRIPT_PATH, asyncResult -> {
                                         if (asyncResult.succeeded()) {
-                                            HttpServerResponse pushedResp = asyncResult.result();
-                                            pushedResp.sendFile(JAVASCRIPT_FILENAME);
+                                            HttpServerResponse pushedResponse = asyncResult.result();
+                                            pushedResponse.sendFile(JAVASCRIPT_FILENAME);
                                         } else {
                                             System.err.println(asyncResult.cause().getMessage());
                                         }
