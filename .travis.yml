@@ -8,4 +8,4 @@ before_install:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 after_success:
   - docker build -t http2-demo-server .
-  - docker push pietvandongen/http2-brain-upgrade
+  - docker push pietvandongen/http2-demo-server
