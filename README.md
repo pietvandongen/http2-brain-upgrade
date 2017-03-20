@@ -7,6 +7,16 @@ A demonstration implementation of an [HTTP/2][1] server (using [Vert.x][2]) for 
 [![Build Status](https://travis-ci.org/pietvandongen/http2-brain-upgrade.svg?branch=master)](https://travis-ci.org/pietvandongen/http2-brain-upgrade)
 [![Docker Pulls](https://img.shields.io/docker/pulls/pietvandongen/http2-demo-server.svg)](https://hub.docker.com/r/pietvandongen/http2-demo-server/)
 
+## See it in action
+
+The quickest way to see the server in action is to pull its Docker container image, run it and go to your browser:
+ 
+ ```bash
+ docker run -p 8080:8080 pietvandongen/http2-demo-server
+ ```
+ 
+ The visit [https://localhost:8080/](https://localhost:8080/) and get glorious HTTP/2 responses!
+
 ## Building
 
 You can build the server either as a JAR with dependencies (using [Gradle][4]), or as a container (using [Docker][5]). 
