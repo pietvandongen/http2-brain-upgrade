@@ -11,6 +11,6 @@ dependencies {
 }
 
 task runServer(type:JavaExec) {
-    main = 'com.pietvandongen.http2brainupgrade.Example'
+    main = 'com.pietvandongen.http2brainupgrade.Server'
     classpath = sourceSets.main.runtimeClasspath
 }
