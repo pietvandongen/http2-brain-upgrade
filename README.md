@@ -5,7 +5,7 @@ A demonstration implementation of an [HTTP/2][1] server (using [Vert.x][2]) for 
 ## Build status
 
 [![Build Status](https://travis-ci.org/pietvandongen/http2-brain-upgrade.svg?branch=master)](https://travis-ci.org/pietvandongen/http2-brain-upgrade)
-[![Codecov](https://img.shields.io/codecov/c/github/pietvandongen/http2-demo-server.svg)](https://codecov.io/gh/pietvandongen/http2-brain-upgrade)
+[![Codecov](https://img.shields.io/codecov/c/github/pietvandongen/http2-brain-upgrade.svg)](https://codecov.io/gh/pietvandongen/http2-brain-upgrade)
 [![Docker Pulls](https://img.shields.io/docker/pulls/pietvandongen/http2-demo-server.svg)](https://hub.docker.com/r/pietvandongen/http2-demo-server/)
 
 ## See it in action
