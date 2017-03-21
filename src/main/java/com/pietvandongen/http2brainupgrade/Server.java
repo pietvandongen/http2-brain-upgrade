@@ -8,87 +8,79 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.JksOptions;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class Server {
 
-    private static final String HTML_FILENAME = "index.html";
-    private static final String STYLESHEET_FILENAME = "style.css";
-    private static final String IMAGE_FILENAME = "photo.jpg";
-    private static final String JAVASCRIPT_FILENAME = "application.js";
-
-    private static final String BASE_PATH = "/";
-    private static final String STYLESHEET_PATH = BASE_PATH + STYLESHEET_FILENAME;
-    private static final String IMAGE_PATH = BASE_PATH + IMAGE_FILENAME;
-    private static final String JAVASCRIPT_PATH = BASE_PATH + JAVASCRIPT_FILENAME;
-
     private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
+
+    private static final JksOptions KEYSTORE_OPTIONS = new JksOptions()
+            .setPath("keystore.jks")
+            .setPassword("secret");
+
+    private static final HttpServerOptions SERVER_OPTIONS = new HttpServerOptions()
+            .setUseAlpn(true)
+            .setSsl(true)
+            .setKeyStoreOptions(KEYSTORE_OPTIONS);
+
+    static final Map<String, Resource> resources = new HashMap<>();
+    static final Resource HTML = Resource.create("/", "index.html");
+    static final Resource STYLESHEET = Resource.create("/style.css", "style.css");
+    static final Resource IMAGE = Resource.create("/photo.jpg", "photo.jpg");
+    static final Resource JAVASCRIPT = Resource.create("/application.js", "application.js");
+
+    static {
+        resources.put(HTML.getPath(), HTML);
+        resources.put(STYLESHEET.getPath(), STYLESHEET);
+        resources.put(IMAGE.getPath(), IMAGE);
+        resources.put(JAVASCRIPT.getPath(), JAVASCRIPT);
+    }
 
     public static void main(String[] args) {
         LOGGER.info("Starting server...");
 
-        JksOptions jksOptions = new JksOptions()
-                .setPath("keystore.jks")
-                .setPassword("secret");
-
-        HttpServerOptions options = new HttpServerOptions()
-                .setUseAlpn(true)
-                .setSsl(true)
-                .setKeyStoreOptions(jksOptions)
-                .setCompressionSupported(true)
-                .setLogActivity(true);
-
         Vertx.vertx()
-                .createHttpServer(options)
+                .createHttpServer(SERVER_OPTIONS)
                 .requestHandler(Server::handleRequest)
                 .listen(8080);
     }
 
-    private static void handleRequest(HttpServerRequest request) {
+    static void handleRequest(HttpServerRequest request) {
         LOGGER.info("Handling incoming request...");
 
+        Resource requestedResource = resources.get(request.path());
         HttpServerResponse response = request.response();
 
-        switch (request.path()) {
-            case BASE_PATH:
-                LOGGER.info("Sending resource " + HTML_FILENAME + " ...");
-                response
-                        .push(HttpMethod.GET, STYLESHEET_PATH, handler -> pushResource(handler, STYLESHEET_FILENAME))
-                        .push(HttpMethod.GET, IMAGE_PATH, handler -> pushResource(handler, IMAGE_FILENAME))
-                        .push(HttpMethod.GET, JAVASCRIPT_PATH, handler -> pushResource(handler, JAVASCRIPT_FILENAME))
-                        .sendFile(HTML_FILENAME);
-                break;
-
-            case STYLESHEET_PATH:
-                LOGGER.info("Sending resource " + STYLESHEET_FILENAME + " ...");
-                response.sendFile(STYLESHEET_FILENAME);
-                break;
-
-            case IMAGE_PATH:
-                LOGGER.info("Sending resource " + IMAGE_FILENAME + " ...");
-                response.sendFile(IMAGE_FILENAME);
-                break;
-
-            case JAVASCRIPT_PATH:
-                LOGGER.info("Sending resource " + JAVASCRIPT_FILENAME + " ...");
-                response.sendFile(JAVASCRIPT_FILENAME);
-                break;
-
-            default:
-                LOGGER.info("Not found: " + request.path());
-                response.setStatusCode(404).end();
-                break;
+        if (requestedResource == null) {
+            LOGGER.info("Resource not found: " + request.path());
+            response.setStatusCode(404).end();
+            return;
         }
+
+        LOGGER.info("Sending resource " + requestedResource.getFileName() + " ...");
+
+        if (requestedResource.equals(HTML)) {
+            pushResource(response, STYLESHEET);
+            pushResource(response, IMAGE);
+            pushResource(response, JAVASCRIPT);
+        }
+
+        response.sendFile(requestedResource.getFileName());
     }
 
-    private static void pushResource(AsyncResult<HttpServerResponse> handler, String fileName) {
-        LOGGER.info("Pushing resource " + fileName + " ...");
+    static void pushResource(HttpServerResponse response, Resource resource) {
+        response.push(HttpMethod.GET, resource.getPath(), asyncResult -> handlePush(asyncResult, resource));
+    }
 
-        if (handler.succeeded()) {
-            HttpServerResponse pushedResponse = handler.result();
-            pushedResponse.sendFile(fileName);
+    static void handlePush(AsyncResult<HttpServerResponse> asyncResult, Resource resource) {
+        if (asyncResult.succeeded()) {
+            LOGGER.info("Pushing resource " + resource.getFileName() + " ...");
+            HttpServerResponse pushedResponse = asyncResult.result();
+            pushedResponse.sendFile(resource.getFileName());
         } else {
-            LOGGER.info(handler.cause().getMessage());
+            LOGGER.info(asyncResult.cause().getMessage());
         }
     }
 }
