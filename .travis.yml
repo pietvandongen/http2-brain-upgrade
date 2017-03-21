@@ -6,6 +6,9 @@ services:
   - docker
 before_install:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+install:
+  - ./gradlew build
 after_success:
+  - codecov
   - docker build -t pietvandongen/http2-demo-server .
   - docker push pietvandongen/http2-demo-server
