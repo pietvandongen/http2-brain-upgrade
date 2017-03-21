@@ -10,6 +10,6 @@ install:
   - ./gradlew build
 after_success:
   - ./gradlew jacocoTestReport
-  - codecov
+  - bash <(curl -s https://codecov.io/bash)
   - docker build -t pietvandongen/http2-demo-server .
   - docker push pietvandongen/http2-demo-server
