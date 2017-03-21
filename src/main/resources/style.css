@@ -7,7 +7,7 @@
 }
 
 body {
-    background-color: #0079f3;
+    background-color: #bfbfbf;
     color: #413b4f;
     font-family: sans-serif;
     font-size: 20px;
@@ -35,13 +35,13 @@ footer {
 }
 
 footer {
-    background: #0079f3;
-    color: #fcfdff;
+    background: #bfbfbf;
+    color: #f1f1f1;
 }
 
 nav a,
 footer a {
-    color: #dfeeff;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -78,7 +78,7 @@ article ul li:before {
 }
 
 button {
-    background: #0079f3;
+    background: #01b71b;
     border: 0;
     border-radius: 2rem;
     color: #fff;
