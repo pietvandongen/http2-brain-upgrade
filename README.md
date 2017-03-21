@@ -16,7 +16,7 @@ The quickest way to see the server in action is to pull its Docker container ima
  docker run -p 8080:8080 pietvandongen/http2-demo-server
  ```
  
- The visit [https://localhost:8080/](https://localhost:8080/) and get glorious HTTP/2 responses!
+Then visit [https://localhost:8080/](https://localhost:8080/) and get glorious HTTP/2 responses!
 
 ## Building
 
@@ -43,7 +43,7 @@ docker build -t http2-demo-server .
 
 ## How to run
 
-Depending on your build artifact, you can either run the server on the JVM or using Docker. 
+Depending on your build artifact, you can either run the server on the JVM or use Docker. 
 
 When it is running, you can go to [https://localhost:8080/](https://localhost:8080/) to access the server!
 
