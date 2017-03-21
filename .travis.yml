@@ -9,6 +9,7 @@ before_install:
 install:
   - ./gradlew build
 after_success:
+  - ./gradlew jacocoTestReport
   - codecov
   - docker build -t pietvandongen/http2-demo-server .
   - docker push pietvandongen/http2-demo-server
