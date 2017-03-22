@@ -8,9 +8,14 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.net.JksOptions;
 
+import java.util.AbstractMap;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Server {
 
@@ -25,18 +30,12 @@ public class Server {
             .setSsl(true)
             .setKeyStoreOptions(KEYSTORE_OPTIONS);
 
-    static final Map<String, Resource> resources = new HashMap<>();
     static final Resource HTML = Resource.create("/", "index.html");
     static final Resource STYLESHEET = Resource.create("/style.css", "style.css");
     static final Resource IMAGE = Resource.create("/photo.jpg", "photo.jpg");
     static final Resource JAVASCRIPT = Resource.create("/application.js", "application.js");
 
-    static {
-        resources.put(HTML.getPath(), HTML);
-        resources.put(STYLESHEET.getPath(), STYLESHEET);
-        resources.put(IMAGE.getPath(), IMAGE);
-        resources.put(JAVASCRIPT.getPath(), JAVASCRIPT);
-    }
+    private static final Map<String, Resource> resources = Stream.of(HTML, STYLESHEET, IMAGE, JAVASCRIPT).collect(Collectors.toMap(Resource::getPath, Function.identity()));
 
     public static void main(String[] args) {
         LOGGER.info("Starting server...");
@@ -70,7 +69,7 @@ public class Server {
         response.sendFile(requestedResource.getFileName());
     }
 
-    static void pushResource(HttpServerResponse response, Resource resource) {
+    private static void pushResource(HttpServerResponse response, Resource resource) {
         response.push(HttpMethod.GET, resource.getPath(), asyncResult -> handlePush(asyncResult, resource));
     }
 
